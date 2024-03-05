@@ -1,45 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import GetRandomRecipes200Response from './GetRandomRecipes200Response';
-import './index.css'
+import React, { useState } from "react";
+import MealList from "./MealList";
+import './App.css';
 
 
-const App = () => {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
+function App() {
+  const [mealData, setMealData] = useState(null);
+  const [calories, setCalories] = useState(2500);
 
-    const fetchData = async () => {
-        try {
-            let response = await fetch('https://api.spoonacular.com/recipes/random?apiKey=e7ffaa4a756549eb82f0afa0aaa63f1d');
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            let recipeData = await response.json();
-            setData(GetRandomRecipes200Response.constructFromObject(recipeData));
-        } catch (error) {
-            setError('Could not fetch data');
-            console.error('Error fetching data:', error);
-        }
-    };
+  function getMealData() {
+    fetch(
+        `https://api.spoonacular.com/mealplanner/generate?apiKey=e7ffaa4a756549eb82f0afa0aaa63f1d&timeFrame=day&targetCalories=${calories}`    )
+      .then((response) => response.json())
+      .then((data) => {
+        setMealData(data);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+  }
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+  function handleChange(e) {
+    setCalories(e.target.value);
+  }
 
-    if (!data) {
-        return <h1>Loading...</h1>;
-    }
-    if (error) {
-        return <h1>{error}</h1>;
-    }
-
-    return (
-        <div>
-            <h1>Random Recipe</h1>
-            <h2>{data.recipes[0].title}</h2>
-            <img src={data.recipes[0].image} alt={data.recipes[0].title} />
-            <button onClick={fetchData}>Fetch Again</button>
-        </div>
-    );
-};
+  return (
+    <div className="App">
+      <section className="controls">
+        <input
+          type="number"
+          placeholder="Calories"
+          onChange={handleChange}
+        />
+        <button onClick={getMealData}>Get Daily Meal Plan</button>
+      </section>
+      {mealData && <MealList mealData={mealData} />}
+    </div>
+  );
+}
 
 export default App;
