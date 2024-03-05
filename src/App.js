@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './index.css';
+import GetRandomRecipes200Response from './GetRandomRecipes200Response';
+import './index.css'
 
-class GetRandomRecipes200Response {
-    constructor({ recipes }) {
-        this.recipes = recipes || [];
-    }
-
-    static constructFromObject(data) {
-        const recipes = data && data.recipes ?
-            data.recipes.map(recipeData => new GetRandomRecipes200Response(recipeData)) :
-            [];
-        return new GetRandomRecipes200Response({ recipes });
-    }
-}
 
 const App = () => {
     const [data, setData] = useState(null);

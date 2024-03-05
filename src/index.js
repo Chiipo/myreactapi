@@ -1,18 +1,11 @@
 
-class GetRandomRecipes200Response {
-  constructor(recipes) {
-      this.recipes = recipes;
-  }
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App'; // Assuming your main component is named App
 
-  static constructFromObject(data) {
-      const recipes = data && data.recipes ?
-          data.recipes.map(recipeData => GetRandomRecipes200Response.constructFromObject(recipeData)) :
-          [];
-      return new GetRandomRecipes200Response(recipes);
-  }
-}
-
-GetRandomRecipes200Response.prototype.recipes = [];
-
-export default GetRandomRecipes200Response;
-
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
