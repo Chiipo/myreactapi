@@ -1,8 +1,7 @@
 import React from "react";
 import Meal from "./Meal";
 
-export default function MealList({ mealData, calories }) {
-  if (!mealData || !mealData.nutrients || !calories) return null;
+export default function MealList({ mealData }) {
 
   const nutrients = mealData.nutrients;
 
