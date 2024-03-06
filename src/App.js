@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MealList from "./MealList";
-import './App.css';
-
+import "./App.css";
 
 function App() {
   const [mealData, setMealData] = useState(null);
@@ -9,7 +8,8 @@ function App() {
 
   function getMealData() {
     fetch(
-        `https://api.spoonacular.com/mealplanner/generate?apiKey=e7ffaa4a756549eb82f0afa0aaa63f1d&timeFrame=day&targetCalories=${calories}`    )
+      `https://api.spoonacular.com/mealplanner/generate?apiKey=${process.env.REACT_APP_API_KEY}&timeFrame=day&targetCalories=${calories}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setMealData(data);
@@ -28,11 +28,13 @@ function App() {
       <section className="controls">
         <input
           type="number"
-          placeholder="Calories"
+          placeholder=" Enter Calories "
+          value={calories}
           onChange={handleChange}
         />
-        <button onClick={getMealData}>Get Daily Meal Plan</button>
+        <button onClick={getMealData}>Lets Make A Meal</button>
       </section>
+      <div className="calories-display">Current Calories: {calories}</div>
       {mealData && <MealList mealData={mealData} />}
     </div>
   );

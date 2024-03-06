@@ -1,18 +1,20 @@
 import React from "react";
 import Meal from "./Meal";
 
-export default function MealList({ mealData }) {
+export default function MealList({ mealData, calories }) {
+  if (!mealData || !mealData.nutrients || !calories) return null;
+
   const nutrients = mealData.nutrients;
 
   return (
     <main>
       <section className="nutrients">
-        <h1>Macros</h1>
+        <h1>Macros Breakdown</h1>
         <ul>
-          <li>Calories: {nutrients.calories.toFixed(0)}</li>
-          <li>Carbohydrates: {nutrients.carbohydrates.toFixed(0)}</li>
-          <li>Fat: {nutrients.fat.toFixed(0)}</li>
-          <li>Protein: {nutrients.protein.toFixed(0)}</li>
+          <li>Calories: {Math.floor(nutrients.calories)}</li>
+          <li>Carbohydrates: {Math.floor(nutrients.carbohydrates)}</li>
+          <li>Fat: {Math.floor(nutrients.fat)}</li>
+          <li>Protein: {Math.floor(nutrients.protein)}</li>
         </ul>
       </section>
 
